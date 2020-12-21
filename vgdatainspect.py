@@ -8,10 +8,15 @@ import json
 def check_wad(file_input):
     if ((file_input[0:8] == "49574144") or (file_input[0:8] == "50574144")):
         return "Doom WAD file confirmed"
+    else:
+        return "Unknown WAD file"
+
         
 def check_xld(file_input):
     if (file_input[0:10] == "584C443049"):
         return "Albion XLD file confirmed" 
+    else:
+        return "Unknown XLD file"
     
 def grab_extension_match(argument): 
     with open('rcogfileexts.json', 'r') as json_file:
