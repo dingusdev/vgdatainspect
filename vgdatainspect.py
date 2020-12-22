@@ -21,7 +21,7 @@ def check_pak(file_input):
     if (file_input[0:8] == "5041434B"):
         return "Quake PAK file suspected" 
     else:
-        return "Unknown XLD file"
+        return "Unknown PAK file"
     
 def grab_extension_match(argument): 
     with open('rcogfileexts.json', 'r') as json_file:
