@@ -23,6 +23,19 @@ def check_pak(file_input):
     else:
         return "Unknown PAK file"
 
+def check_cod_ff(file_input):
+    grab_sig = file_input[0:16]
+
+    codsig = {
+        "4957666675313030" : "Unsigned Infinity Ward FF file",
+        "4957666630313030" : "Signed Infinity Ward FF file",
+        "5441666630313030" : "Signed Treyarch FF file (Black Ops II)",
+        "5331666630313030" : "Signed Sledgehammer Games FF file",
+        "5441666630303030" : "Signed Treyarch FF file (Black Ops III)",
+    }
+
+    return codsig.get(grab_sig, "Unrecognized File Extension") 
+    
 def check_magic_number(file_input):
     if (file_input[0:8] == "504B0304"):
         return "ZIP file suspected" 
@@ -71,6 +84,8 @@ if __name__ == "__main__":
             print(check_xld(step1))
         elif (argument[1] == ".pak"):
             print(check_pak(step1))
+        elif (argument[1] == ".ff"):
+            print(check_cod_ff(step1))
         else:
             print("Checking for a magic number...")
             print(check_magic_number(step1))
