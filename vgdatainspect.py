@@ -27,7 +27,7 @@ def grab_extension_match(argument):
     with open('rcogfileexts.json', 'r') as json_file:
         switcher = json.load(json_file)
   
-    return switcher.get(argument, "Unrecognized File Extension") 
+    return switcher.get(argument.lower(), "Unrecognized File Extension") 
 
 if __name__ == "__main__":
     txt = input("Enter the file you would like to inspect: ")
