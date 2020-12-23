@@ -22,6 +22,18 @@ def check_pak(file_input):
         return "Quake PAK file suspected" 
     else:
         return "Unknown PAK file"
+
+def check_magic_number(file_input):
+    if (file_input[0:8] == "504B0304"):
+        return "ZIP file suspected" 
+    elif (file_input[0:12] == "526172211A07"):
+        return "RAR file suspected" 
+    elif (file_input[0:12] == "377ABCAF271C"):
+        return "7zip file suspected"
+    elif (file_input[0:6] == "524E53"):
+        return "RNC-compressed file suspected"
+    else:
+        return "Magic number not known"
     
 def grab_extension_match(argument): 
     with open('rcogfileexts.json', 'r') as json_file:
@@ -48,12 +60,10 @@ if __name__ == "__main__":
         else:
             print("Entire File Contents:")
             step1 = grabfile.read().hex()
-
-            # Kludge - Signature check
                 
             print(step1.upper())
        
-            # Kludge - Signature check
+        # Kludge - Signature check
             
         if (argument[1] == ".wad"):
             print(check_wad(step1))
@@ -61,6 +71,9 @@ if __name__ == "__main__":
             print(check_xld(step1))
         elif (argument[1] == ".pak"):
             print(check_pak(step1))
+        else:
+            print("Checking for a magic number...")
+            print(check_magic_number(step1))
 
     else:
         print("It seems the file does not exist. Make sure it is in the proper file path specified.")
