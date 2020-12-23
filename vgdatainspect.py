@@ -34,7 +34,7 @@ def check_cod_ff(file_input):
         "5441666630303030" : "Signed Treyarch FF file (Black Ops III)",
     }
 
-    return codsig.get(grab_sig, "Unrecognized File Extension") 
+    return codsig.get(grab_sig, "Unrecognized Fastfile") 
     
 def check_magic_number(file_input):
     if (file_input[0:8] == "504B0304"):
