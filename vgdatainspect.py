@@ -23,6 +23,22 @@ def check_pak(file_input):
     else:
         return "Unknown PAK file"
 
+def form_check(file_input):
+    grab_sig = file_input[16:24]
+
+    codsig = {
+        "38535658" : "8-bit sampled voice",
+        "4143424D" : "Amiga Continuous Bitmap",
+        "41494646" : "Audio Interchange file",
+        "414E424D" : "Animated bitmap",
+        "434D5553" : "Common Musical Score file",
+        "46545854" : "Formatted text",
+        "494C424D" : "DeluxePaint image",
+        "534D5553" : "Simplified Musical Score file"
+    }
+
+    return codsig.get(grab_sig, "Unrecognized IFF-style file") 
+        
 def check_cod_ff(file_input):
     grab_sig = file_input[0:16]
 
@@ -37,14 +53,20 @@ def check_cod_ff(file_input):
     return codsig.get(grab_sig, "Unrecognized Fastfile") 
     
 def check_magic_number(file_input):
-    if (file_input[0:8] == "504B0304"):
+    if (file_input[0:6] == "524E53"):
+        return "RNC-compressed file suspected"
+    elif (file_input[0:8] == "504B0304"):
         return "ZIP file suspected" 
+    elif (file_input[0:8] == "4C5A4950"):
+        return "LZIP file suspected" 
+    elif (file_input[0:8] == "464F524D"):
+        return form_check(file_input)
+    elif (file_input[0:10] == "7573746172"):
+        return "TAR file suspected" 
     elif (file_input[0:12] == "526172211A07"):
         return "RAR file suspected" 
     elif (file_input[0:12] == "377ABCAF271C"):
         return "7zip file suspected"
-    elif (file_input[0:6] == "524E53"):
-        return "RNC-compressed file suspected"
     else:
         return "Magic number not known"
     
