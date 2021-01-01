@@ -309,7 +309,7 @@
  ".fnt": "Font file (usually bitmapped)",
  ".for": "Fortran source file",
  ".forge": "Ubisoft Anvil/AnvilNext/Scimitar data archive",
- ".fos": "Fallout 3/New Vegas/4 save game"
+ ".fos": "Fallout 3/New Vegas/4 save game",
  ".fp3": "FileMaker Pro 3+ database",
  ".fp5": "FileMaker Pro 5+ database",
  ".fp7": "FileMaker Pro 7+ database",
@@ -517,8 +517,8 @@
  ".mng": "Multiple-image Network Graphics file",
  ".mo3": "MO3 tracker music",    
  ".mod": "Module file (i.e. tracker music)",    
- ".models_l0": "Frontier Developments Mipmapped Model (Level 0)"
- ".models_l1": "Frontier Developments Mipmapped Model (Level 1)"
+ ".models_l0": "Frontier Developments Mipmapped Model (Level 0)",
+ ".models_l1": "Frontier Developments Mipmapped Model (Level 1)",
  ".mov": "QuickTime movie file",
  ".mp2": "MPEG Layer-2 audio file",
  ".mp3": "MPEG Layer-3 audio file",
@@ -875,8 +875,8 @@
  ".ter": "Terragen or Torque terrain file",
  ".tesc": "GLSL tessellation control shader",
  ".tese": "GLSL tessellation evaluation shader",
- ".textures_l0": "Frontier Developments Mipmapped Texture (Level 0)"
- ".textures_l1": "Frontier Developments Mipmapped Texture (Level 1)"
+ ".textures_l0": "Frontier Developments Mipmapped Texture (Level 0)",
+ ".textures_l1": "Frontier Developments Mipmapped Texture (Level 1)",
  ".tfc": "Unreal 3 texture cache",
  ".tga": "TarGA Image File",
  ".tgc": "Embedded GameCube Disc Image",
