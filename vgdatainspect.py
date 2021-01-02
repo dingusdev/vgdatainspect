@@ -24,6 +24,14 @@ def check_pak(file_input):
     else:
         return "Unknown PAK file"
 
+def check_ibm(file_input):
+    if ((file_input[0:8] == "06000000") and \
+        (file_input[32:40] == "4C544942") and \
+        (file_input[64:72] == "4C425443") and \
+        (file_input[96:104] == "23504853")):
+        return "Living Books (PC) file suspected"
+    else:
+        return "Unknown IBM file"
 
 def check_dmg(file_input):
     if ((file_input[0:14] == "7801730D626260") or \
@@ -145,6 +153,8 @@ if __name__ == "__main__":
             print(check_pak(step1))
         elif (argument[1] == ".ff"):
             print(check_cod_ff(step1))
+        elif (argument[1] == ".ibm"):
+            print(check_ibm(step1))
         elif (argument[1] == ".mod"):
             if (filesize >= 1084):
                 step2 = grabfile.read()[1080:1084].hex()
