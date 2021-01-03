@@ -4,7 +4,7 @@
 import os
 import sys
 import json
-
+    
 def check_wad(file_input):
     if ((file_input[0:8] == "49574144") or \
         (file_input[0:8] == "50574144")):
@@ -24,6 +24,18 @@ def check_pak(file_input):
     else:
         return "Unknown PAK file"
 
+def check_bmp(file_input):
+    if ((file_input[0:4] == "424D")):
+        return "Windows bitmap file suspected"
+    else:
+        return "Unknown bitmap"
+    
+def check_oct(file_input):
+    if ((file_input[0:16] == "29760145CDCC8C3F")):
+        return "Avalanche Software texture file suspected"
+    else:
+        return "Unknown .oct file"
+    
 def check_ibm(file_input):
     if ((file_input[0:8] == "06000000") and \
         (file_input[32:40] == "4C544942") and \
@@ -153,6 +165,10 @@ if __name__ == "__main__":
             print(check_pak(step1))
         elif (argument[1] == ".ff"):
             print(check_cod_ff(step1))
+        elif (argument[1] == ".oct"):
+            print(check_oct(step1))
+        elif (argument[1] == ".bmp"):
+            print(check_bmp(step1))
         elif (argument[1] == ".ibm"):
             print(check_ibm(step1))
         elif (argument[1] == ".mod"):
