@@ -36,6 +36,12 @@ def check_oct(file_input):
     else:
         return "Unknown .oct file"
     
+def check_gam(file_input):
+    if ((file_input[0:8] == "47415050")):
+        return "The Games Factory game file suspected"
+    else:
+        return "Unknown .oct file"
+        
 def check_ibm(file_input):
     if ((file_input[0:8] == "06000000") and \
         (file_input[32:40] == "4C544942") and \
@@ -137,7 +143,12 @@ if __name__ == "__main__":
     txt = input("Enter the file you would like to inspect: ")
     argument=os.path.splitext(txt)
     print (argument[1])
-    print (grab_extension_match(argument[1]))
+    try:
+        print (grab_extension_match(argument[1]))
+    except JSONDecodeError:
+        print("An error occured in processing the list of extensions!")
+    except:
+        print("An unexpected error occured - please report this issue!")
 
     if os.path.exists(txt):
         grabfile = open(txt, 'rb')
@@ -171,6 +182,8 @@ if __name__ == "__main__":
             print(check_bmp(step1))
         elif (argument[1] == ".ibm"):
             print(check_ibm(step1))
+        elif (argument[1] == ".gam"):
+            print(check_gam(step1))
         elif (argument[1] == ".mod"):
             if (filesize >= 1084):
                 step2 = grabfile.read()[1080:1084].hex()
