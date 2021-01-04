@@ -28,19 +28,19 @@ def check_bmp(file_input):
     if ((file_input[0:4] == "424D")):
         return "Windows bitmap file suspected"
     else:
-        return "Unknown bitmap"
+        return "Unknown BMP file"
     
 def check_oct(file_input):
     if ((file_input[0:16] == "29760145CDCC8C3F")):
         return "Avalanche Software texture file suspected"
     else:
-        return "Unknown .oct file"
+        return "Unknown OCT file"
     
 def check_gam(file_input):
     if ((file_input[0:8] == "47415050")):
         return "The Games Factory game file suspected"
     else:
-        return "Unknown .oct file"
+        return "Unknown GAM file"
         
 def check_ibm(file_input):
     if ((file_input[0:8] == "06000000") and \
@@ -143,12 +143,7 @@ if __name__ == "__main__":
     txt = input("Enter the file you would like to inspect: ")
     argument=os.path.splitext(txt)
     print (argument[1])
-    try:
-        print (grab_extension_match(argument[1]))
-    except JSONDecodeError:
-        print("An error occured in processing the list of extensions!")
-    except:
-        print("An unexpected error occured - please report this issue!")
+    print (grab_extension_match(argument[1]))
 
     if os.path.exists(txt):
         grabfile = open(txt, 'rb')
