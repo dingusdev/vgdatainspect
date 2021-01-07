@@ -1,3 +1,5 @@
+import os
+
 def check_elf(file_input):
     if ((file_input[0:4] == "7F454C46")):
         return "Executable and Linkable Format file suspected"
@@ -5,27 +7,26 @@ def check_elf(file_input):
         return "Unknown ELF file"
         
 def check_exe(file_input):
-    if ((file_input[0:4] == "4D5A") or (file_input[0:4] == "5A4D")):
-        print("DOS/Windows executable file suspected")
+    if ((file_input[0:4] == "4D5A") or (file_input[0:4] == "5A4D")): 
         if (file_input[32:36] == "5242"):
-            print(" using EXEPACK compression")
+            return("DOS executable using EXEPACK compression")
         elif ((file_input[56:64] == "64696574")):
-            print(" using diet compression")
+            return("DOS executable using diet compression")
         elif ((file_input[56:64] == "4C5A3039") or \
             (file_input[56:64] == "4C5A3931")):
-            print(" using LZ91 compression")
+            return("DOS executable using LZ91 compression")
         elif ((file_input[56:64] == "524A5358")):
-            print(" using ARJ compression")
+            return("DOS executable using ARJ compression")
         elif ((file_input[60:72] == "504B4C495445")):
-            print(" using PKLite compression")
+            return("DOS/Windows executable using PKLite compression")
         elif ((file_input[170:176] == "555058")):
-            print(" using UPX compression")
+            return("DOS/Windows executable using UPX compression")
         else: 
-            print(" No detected compression")
+            return("DOS/Windows executable with no detected compression")
     elif ((file_input[0:4] == "4E45")):
-        print("New executable file suspected")
+        return("New executable file suspected")
     else:
-        print("Unknown EXE file")
+        return("Unknown EXE file")
         
 def check_wad(file_input):
     if ((file_input[0:8] == "49574144") or \
@@ -99,10 +100,9 @@ def check_mod(file_input):
         "4D2E4B2E": "ProTracker 4 channel MOD (up to 64 patterns)",
         "4F435441": "OctaMED file",
         "4F4B5441": "Oktalyzer MOD"
-    }
+        }
 
     return codsig.get(file_input, "Unrecognized MOD tracker file or not a tracker file") 
-        
 
 def form_check(file_input):
     grab_sig = file_input[16:24]
