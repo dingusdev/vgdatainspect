@@ -1,5 +1,76 @@
 import os
 
+def check_exe_assist(file_input):
+    compression_string = "No compression suspected"
+
+    codsig = {
+        "start-32:36=5242": "Executable using EXEPACK compression",
+        "start-56:64=4C5A3039": "Executable using LZ-90 compression",
+        "start-56:64=4C5A3931": "Executable using LZ-91 compression",
+        "start-56:64=524A5358": "Executable using ARJ compression",
+        "start-60:72=504B4C495445": "Executable using PKLite compression",
+        "start-170:176=555058": "Executable using UPX compression"
+    }
+    
+    for key in codsig:
+        start_tick = key.split("-")
+        offsets = start_tick[1].split(":")
+        test_split2 = offsets[1].split("=")
+        sig_begin = int(offsets[0])
+        
+        sig_end = int(test_split2[0])
+        sig_string= test_split2[1] 
+        
+        if (file_input[sig_begin:sig_end] == sig_string):
+            compression_string = codsig[key]
+            break
+            
+    return compression_string
+
+def check_magic_assist(file_input):
+    file_type_string = "Magic number not known"
+
+    codsig = {
+        "start-0:6=524E53": "Suspected file using RNC compression",
+        "start-0:8=504B0304": "Suspected ZIP file",
+        "start-0:8=504B0506": "Suspected ZIP file",
+        "start-0:8=504B0708": "Suspected ZIP file",
+        "start-0:8=4C5A4950": "Suspected LZIP file",
+        "start-0:8=50503131": "Suspected file using PowerPacker 1.1 compression",
+        "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
+        "start-0:10=7573746172": "Suspected TAR file",
+        "start-0:12=526172211A07": "Suspected RAR file",
+        "start-0:12=377ABCAF271C": "Suspected 7zip file",
+        "start-0:12=FD377A585A00": "Suspected XZ file"
+    }
+   
+    for key in codsig:
+        start_tick = key.split("-")
+        offsets = start_tick[1].split(":")
+        test_split2 = offsets[1].split("=")
+        
+        sig_begin = int(offsets[0])
+        sig_end = int(test_split2[0])
+        sig_string= test_split2[1] 
+        
+        if (file_input[sig_begin:sig_end] == sig_string):
+            file_type_string = codsig[key]
+            break
+            
+    return compression_string
+    
+def check_app(file_input):
+    if ((file_input[0:8] == "FEEDFACE") or \
+        (file_input[0:8] == "CEFAEDFE")):
+        return "32-bit Mach-O binary suspected"
+    elif ((file_input[0:8] == "FEEDFACF") or \
+        (file_input[0:8] == "CFFAEDFE")):
+        return "64-bit Mach-O binary suspected"
+    elif ((file_input[0:4] == "4379")):
+        return "Cybiko app suspected"
+    else:
+        return "Unknown APP file"
+        
 def check_elf(file_input):
     if ((file_input[0:4] == "7F454C46")):
         return "Executable and Linkable Format file suspected"
@@ -8,21 +79,8 @@ def check_elf(file_input):
         
 def check_exe(file_input):
     if ((file_input[0:4] == "4D5A") or (file_input[0:4] == "5A4D")): 
-        if (file_input[32:36] == "5242"):
-            return("DOS executable using EXEPACK compression")
-        elif ((file_input[56:64] == "64696574")):
-            return("DOS executable using diet compression")
-        elif ((file_input[56:64] == "4C5A3039") or \
-            (file_input[56:64] == "4C5A3931")):
-            return("DOS executable using LZ91 compression")
-        elif ((file_input[56:64] == "524A5358")):
-            return("DOS executable using ARJ compression")
-        elif ((file_input[60:72] == "504B4C495445")):
-            return("DOS/Windows executable using PKLite compression")
-        elif ((file_input[170:176] == "555058")):
-            return("DOS/Windows executable using UPX compression")
-        else: 
-            return("DOS/Windows executable with no detected compression")
+        print("DOS/Windows executable suspected")
+        return(check_exe_assist(file_input))
     elif ((file_input[0:4] == "4E45")):
         return("New executable file suspected")
     else:
@@ -52,6 +110,12 @@ def check_bmp(file_input):
         return "Windows bitmap file suspected"
     else:
         return "Unknown BMP file"
+        
+def check_png(file_input):
+    if ((file_input[0:16] == "89504E470D0A1A0A")):
+        return "Portable Network Graphics file suspected"
+    else:
+        return "Unknown PNG file"
     
 def check_oct(file_input):
     if ((file_input[0:16] == "29760145CDCC8C3F")):
@@ -140,27 +204,7 @@ def check_cod_ff(file_input):
     return codsig.get(grab_sig, "Unrecognized Fastfile") 
     
 def check_magic_number(file_input):
-    if (file_input[0:6] == "524E53"):
-        return "RNC-compressed file suspected"
-    elif ((file_input[0:8] == "504B0304") or \
-          (file_input[0:8] == "504B0506") or \
-          (file_input[0:8] == "504B0708")):
-        return "ZIP file suspected" 
-    elif (file_input[0:8] == "4C5A4950"):
-        return "LZIP file suspected" 
-    elif (file_input[0:8] == "464F524D"):
+    if (file_input[0:8] == "464F524D"):
         return form_check(file_input)
-    elif (file_input[0:10] == "7573746172"):
-        return "TAR file suspected" 
-    elif (file_input[0:12] == "526172211A07"):
-        return "RAR file suspected" 
-    elif (file_input[0:12] == "377ABCAF271C"):
-        return "7zip file suspected"
-    elif (file_input[0:8] == "50503131"):
-        return "PowerPacker 1.1 compressed file suspected"
-    elif (file_input[0:8] == "50503230"):
-        return "PowerPacker 2.0 compressed file suspected"
-    elif (file_input[0:12] == "FD377A585A00"):
-        return "XZ file suspected"
     else:
-        return "Magic number not known"
+        return check_magic_assist(file_input)

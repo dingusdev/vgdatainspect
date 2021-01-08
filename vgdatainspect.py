@@ -14,6 +14,7 @@ def grab_extension_match(argument):
 
 def double_checker(str_extension, str_stream):
     double_checklist = {
+      ".app": checksigs.check_app(str_stream),
       ".bmp": checksigs.check_bmp(str_stream),
       ".elf": checksigs.check_elf(str_stream),
       ".exe": checksigs.check_exe(str_stream),
@@ -24,6 +25,7 @@ def double_checker(str_extension, str_stream):
       ".mod": checksigs.check_mod(str_stream),
       ".oct": checksigs.check_oct(str_stream),
       ".pak": checksigs.check_pak(str_stream),
+      ".png": checksigs.check_pak(str_stream),
       ".wad": checksigs.check_wad(str_stream),
       ".xld": checksigs.check_xld(str_stream),
     }
@@ -57,19 +59,19 @@ if __name__ == "__main__":
         print("File Size (in bytes):", filesize)
         if (filesize >= 256):
             print("First 256 bytes:")
-            step1 = grabfile.read()[0:256].hex()
+            step1 = grabfile.read()[0:256].hex().upper()
 
             for sub_offset in range(0, 512, 32):
-                print(step1[sub_offset:(sub_offset +32)].upper())
+                print(step1[sub_offset:(sub_offset +32)])
         else:
             print("Entire File Contents:")
-            step1 = grabfile.read().hex()
+            step1 = grabfile.read().hex().upper()
                 
             print(step1.upper())
 
         if (grabbed_ext == ".mod"):
             if (filesize >= 1084):
-                step1 = grabfile.read()[1080:1084].hex()
+                step1 = grabfile.read()[1080:1084].hex().upper()
             else:
                 print("Warning - Invalid MOD file suspected")
                 
