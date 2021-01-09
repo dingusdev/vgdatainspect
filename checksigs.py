@@ -120,7 +120,7 @@ def check_bmp(file_input):
                 return "256-color bitmap file"
             elif ((file_input[56:60] == "0400")):
                 return "16-color bitmap file"
-            else
+            else:
                 return "Valid DIB header, but no valid color profile"
     else:
         return "Unknown BMP file"
