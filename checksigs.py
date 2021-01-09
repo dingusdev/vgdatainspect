@@ -1,4 +1,5 @@
 import os
+import mmap
 
 def key_check(token_string, file_input):
     start_tick = token_string.split("-")
@@ -12,13 +13,16 @@ def key_check(token_string, file_input):
     magic_check = file_input[sig_begin:sig_end]
     sig_length= sig_end - sig_begin
     
+    if (sig_begin >= sig_end and sig_begin < 0 and sig_end < 0):
+        return False
+    
     if (len(magic_check) == sig_length):
         if (magic_check == sig_string):
-            return True;
+            return True
         else:
-            return False;
+            return False
     else:
-        return False;
+        return False
 
 def check_exe_assist(file_input):
     compression_string = "No compression suspected"
@@ -125,9 +129,29 @@ def check_bmp(file_input):
     else:
         return "Unknown BMP file"
         
-def check_png(file_input):
+def check_png(file_input, file_name):
     if ((file_input[0:16] == "89504E470D0A1A0A")):
-        return "Portable Network Graphics file suspected"
+        print("Portable Network Graphics file suspected.")
+        print("Checking file integrity")
+        
+        ihdrcheck = open(file_name, 'rb').read()[12:16].hex().upper()
+        iendcheck = open(file_name, 'rb').read()[-8:-4].hex().upper()
+        
+        #PLTE checks
+        if (file_input[50:52] == "03"):  #Color type 3 - PLTE must be present
+            if "504C5445" not in open(file_name, 'rb').read().hex().upper():
+                return "Corrupted PNG file"
+        elif (file_input[50:52] == "00") or (file_input[50:52] == "04"):
+            #Color types 0 and 4 - PLTE must NOT be present because they're grayscale formats
+            if "504C5445" in open(file_name, 'rb').read().hex().upper():
+                return "Corrupted PNG file"
+        
+        if ihdrcheck == "49484452" and iendcheck == "49454E44" and \
+           "49444154" in open(file_name, 'rb').read().hex().upper():
+            return "Valid PNG file"
+        else:
+            return "Corrupted PNG file"
+        
     else:
         return "Unknown PNG file"
     

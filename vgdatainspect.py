@@ -12,11 +12,10 @@ def grab_extension_match(argument):
   
     return switcher.get(argument.lower(), "Unrecognized File Extension") 
 
-def double_checker(str_extension, str_stream):
+def double_checker(str_extension, str_stream, str_file):
     double_checklist = {
       ".app": checksigs.check_app(str_stream),
       ".bmp": checksigs.check_bmp(str_stream),
-      ".dib": checksigs.check_bmp(str_stream),
       ".elf": checksigs.check_elf(str_stream),
       ".exe": checksigs.check_exe(str_stream),
       ".ff":  checksigs.check_cod_ff(str_stream),
@@ -26,7 +25,7 @@ def double_checker(str_extension, str_stream):
       ".mod": checksigs.check_mod(str_stream),
       ".oct": checksigs.check_oct(str_stream),
       ".pak": checksigs.check_pak(str_stream),
-      ".png": checksigs.check_pak(str_stream),
+      ".png": checksigs.check_png(str_stream, str_file),
       ".wad": checksigs.check_wad(str_stream),
       ".xld": checksigs.check_xld(str_stream),
     }
@@ -77,7 +76,7 @@ if __name__ == "__main__":
                 print("Warning - Invalid MOD file suspected")
                 
         print("Checking for a magic number...")
-        print(double_checker(grabbed_ext, step1))
+        print(double_checker(grabbed_ext, step1, txt))
 
     else:
         print("It seems the file does not exist. Make sure it is in the proper file path specified.")
