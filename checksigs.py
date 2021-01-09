@@ -112,7 +112,16 @@ def check_pak(file_input):
 
 def check_bmp(file_input):
     if ((file_input[0:4] == "424D")):
-        return "Windows bitmap file suspected"
+        print("Windows bitmap file suspected")
+        if (file_input[28:36] == "28000000"):
+            if ((file_input[56:60] == "1800")):
+                return "24-bit color bitmap file"
+            elif ((file_input[56:60] == "0800")):
+                return "256-color bitmap file"
+            elif ((file_input[56:60] == "0400")):
+                return "16-color bitmap file"
+            else
+                return "Valid DIB header, but no valid color profile"
     else:
         return "Unknown BMP file"
         

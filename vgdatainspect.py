@@ -16,6 +16,7 @@ def double_checker(str_extension, str_stream):
     double_checklist = {
       ".app": checksigs.check_app(str_stream),
       ".bmp": checksigs.check_bmp(str_stream),
+      ".dib": checksigs.check_bmp(str_stream),
       ".elf": checksigs.check_elf(str_stream),
       ".exe": checksigs.check_exe(str_stream),
       ".ff":  checksigs.check_cod_ff(str_stream),
