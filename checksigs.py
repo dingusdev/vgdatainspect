@@ -139,11 +139,11 @@ def check_png(file_input, file_name):
         
         #PLTE checks
         if (file_input[50:52] == "03"):  #Color type 3 - PLTE must be present
-            if "504C5445" not in open(file_name, 'rb').read().hex().upper():
+            if "504C5445" not in file_input:
                 return "Corrupted PNG file"
         elif (file_input[50:52] == "00") or (file_input[50:52] == "04"):
             #Color types 0 and 4 - PLTE must NOT be present because they're grayscale formats
-            if "504C5445" in open(file_name, 'rb').read().hex().upper():
+            if "504C5445" in file_input:
                 return "Corrupted PNG file"
         
         if ihdrcheck == "49484452" and iendcheck == "49454E44" and \
@@ -188,6 +188,18 @@ def check_mfa(file_input):
         return "Multimedia Fusion 2 MFA file"
     else:
         return "Unknown MFA file"
+
+def check_dlw(file_input):
+    if (file_input[0:16] == "53555052454D4521"):
+        return "Dr. Lunatic Supreme with Cheese world file"
+    else:
+        return "Unknown DLW file"
+       
+def check_sav(file_input):
+    if ((file_input[0:8] == "46444C41")):
+        return "Transcendence game save file"
+    else:
+        return "Unknown SAV file"
     
 def check_mod(file_input):
     codsig = {

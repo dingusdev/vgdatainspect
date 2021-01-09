@@ -16,6 +16,7 @@ def double_checker(str_extension, str_stream, str_file):
     double_checklist = {
       ".app": checksigs.check_app(str_stream),
       ".bmp": checksigs.check_bmp(str_stream),
+      ".dlw": checksigs.check_dlw(str_stream),
       ".elf": checksigs.check_elf(str_stream),
       ".exe": checksigs.check_exe(str_stream),
       ".ff":  checksigs.check_cod_ff(str_stream),
@@ -26,6 +27,7 @@ def double_checker(str_extension, str_stream, str_file):
       ".oct": checksigs.check_oct(str_stream),
       ".pak": checksigs.check_pak(str_stream),
       ".png": checksigs.check_png(str_stream, str_file),
+      ".sav": checksigs.check_sav(str_stream),
       ".wad": checksigs.check_wad(str_stream),
       ".xld": checksigs.check_xld(str_stream),
     }
