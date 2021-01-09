@@ -1,5 +1,25 @@
 import os
 
+def key_check(token_string, file_input):
+    start_tick = token_string.split("-")
+    offsets = start_tick[1].split(":")
+    test_split2 = offsets[1].split("=")
+        
+    sig_begin = int(offsets[0])
+    sig_end = int(test_split2[0])
+    sig_string= test_split2[1] 
+    
+    magic_check = file_input[sig_begin:sig_end]
+    sig_length= sig_end - sig_begin
+    
+    if (len(magic_check) == sig_length):
+        if (magic_check == sig_string):
+            return True;
+        else:
+            return False;
+    else:
+        return False;
+
 def check_exe_assist(file_input):
     compression_string = "No compression suspected"
 
@@ -13,16 +33,8 @@ def check_exe_assist(file_input):
     }
     
     for key in codsig:
-        start_tick = key.split("-")
-        offsets = start_tick[1].split(":")
-        test_split2 = offsets[1].split("=")
-        sig_begin = int(offsets[0])
-        
-        sig_end = int(test_split2[0])
-        sig_string= test_split2[1] 
-        
-        if (file_input[sig_begin:sig_end] == sig_string):
-            compression_string = codsig[key]
+        if key_check(key, file_input) is True:
+            file_type_string = codsig[key]
             break
             
     return compression_string
@@ -41,23 +53,16 @@ def check_magic_assist(file_input):
         "start-0:10=7573746172": "Suspected TAR file",
         "start-0:12=526172211A07": "Suspected RAR file",
         "start-0:12=377ABCAF271C": "Suspected 7zip file",
-        "start-0:12=FD377A585A00": "Suspected XZ file"
+        "start-0:12=FD377A585A00": "Suspected XZ file",
+        "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file"
     }
    
     for key in codsig:
-        start_tick = key.split("-")
-        offsets = start_tick[1].split(":")
-        test_split2 = offsets[1].split("=")
-        
-        sig_begin = int(offsets[0])
-        sig_end = int(test_split2[0])
-        sig_string= test_split2[1] 
-        
-        if (file_input[sig_begin:sig_end] == sig_string):
+        if key_check(key, file_input) is True:
             file_type_string = codsig[key]
             break
             
-    return compression_string
+    return file_type_string
     
 def check_app(file_input):
     if ((file_input[0:8] == "FEEDFACE") or \
