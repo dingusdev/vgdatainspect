@@ -13,7 +13,7 @@ def key_check(token_string, file_input):
     magic_check = file_input[sig_begin:sig_end]
     sig_length= sig_end - sig_begin
     
-    if (sig_begin >= sig_end and sig_begin < 0 and sig_end < 0):
+    if (sig_begin >= sig_end or sig_begin < 0 or sig_end < 0):
         return False
     
     if (len(magic_check) == sig_length):
@@ -167,6 +167,14 @@ def check_gam(file_input):
     else:
         return "Unknown GAM file"
         
+def check_jpeg(file_input):
+    if ((file_input[0:8] == "FFD8FFDB") or (file_input[0:8] == "FFD8FFEE") or \
+        ((file_input[0:8] == "FFD8FFE0") and (file_input[16:24] == "4A464946")) or \
+        ((file_input[0:8] == "FFD8FFE1") and (file_input[16:24] == "45786966"))):
+        return "Living Books (PC) file suspected"
+    else:
+        return "Unknown IBM file"
+        
 def check_ibm(file_input):
     if ((file_input[0:8] == "06000000") and \
         (file_input[32:40] == "4C544942") and \
@@ -201,6 +209,12 @@ def check_sav(file_input):
     else:
         return "Unknown SAV file"
     
+def check_midi(file_input):
+    if ((file_input[0:8] == "4D546864")):
+        return "Musical Instrument Digital Interface music file suspected"
+    else:
+        return "Unknown GAM file"
+        
 def check_mod(file_input):
     codsig = {
         "3243484E": "FastTracker 2 channel MOD",
