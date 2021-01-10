@@ -21,6 +21,7 @@ def double_checker(str_extension, str_stream, str_file):
       ".exe": checksigs.check_exe(str_stream),
       ".ff":  checksigs.check_cod_ff(str_stream),
       ".gam": checksigs.check_gam(str_stream),
+      ".gif": checksigs.check_gif(str_stream),
       ".ibm": checksigs.check_ibm(str_stream),
       ".jpg": checksigs.check_jpeg(str_stream),
       ".jpeg": checksigs.check_jpeg(str_stream),
