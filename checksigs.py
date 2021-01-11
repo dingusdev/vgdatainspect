@@ -205,7 +205,7 @@ def check_jpeg(file_input):
         
 def check_mfa(file_input):
     if ((file_input[0:8] == "4D4D4632")):
-        return "Multimedia Fusion 2 MFA file"
+        return "Multimedia Fusion 2 MFA file suspected"
     else:
         return "Unknown MFA file"
 
@@ -232,6 +232,12 @@ def check_mod(file_input):
 
     return codsig.get(file_input, "Unrecognized MOD tracker file or not a tracker file") 
     
+def check_mpq(file_input):
+    if ((file_input[0:8] == "4D50511A")):
+        return "Blizzard MoPaQ file suspected"
+    else:
+        return "Unknown MPQ file"
+        
 def check_oct(file_input):
     if ((file_input[0:16] == "29760145CDCC8C3F")):
         return "Avalanche Software texture file suspected"
@@ -272,9 +278,15 @@ def check_png(file_input, file_name):
         
 def check_sav(file_input):
     if ((file_input[0:8] == "46444C41")):
-        return "Transcendence game save file"
+        return "Transcendence game save file suspected"
     else:
         return "Unknown SAV file"
+
+def check_szt(file_input):
+    if ((file_input[0:4] == "FEFF")):
+        return "Super ZZT level/world file"
+    else:
+        return "Corrupted Super ZZT file suspected"
         
 def check_wad(file_input):
     if ((file_input[0:8] == "49574144") or \
@@ -289,6 +301,12 @@ def check_xld(file_input):
     else:
         return "Unknown XLD file"
 
+def check_zzt(file_input):
+    if ((file_input[0:4] == "FFFF")):
+        return "ZZT level file"
+    else:
+        return "Corrupted ZZT file suspected"
+        
 def check_magic_number(file_input):
     if (file_input[0:8] == "464F524D"):
         return form_check(file_input)

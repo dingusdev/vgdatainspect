@@ -29,12 +29,15 @@ def double_checker(str_extension, str_stream, str_file):
       ".midi": checksigs.check_midi(str_stream),
       ".mfa": checksigs.check_mfa(str_stream),
       ".mod": checksigs.check_mod(str_stream),
+      ".mpq": checksigs.check_mpq(str_stream),
       ".oct": checksigs.check_oct(str_stream),
       ".pak": checksigs.check_pak(str_stream),
       ".png": checksigs.check_png(str_stream, str_file),
       ".sav": checksigs.check_sav(str_stream),
+      ".szt": checksigs.check_szt(str_stream),
       ".wad": checksigs.check_wad(str_stream),
       ".xld": checksigs.check_xld(str_stream),
+      ".zzt": checksigs.check_zzt(str_stream),
     }
 
     if str_extension in double_checklist:
