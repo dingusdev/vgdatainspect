@@ -30,6 +30,7 @@ def double_checker(str_extension, str_stream, str_file):
       ".midi": checksigs.check_midi(str_stream),
       ".mfa": checksigs.check_mfa(str_stream),
       ".mod": checksigs.check_mod(str_stream),
+      ".mp3": checksigs.check_mp3(str_stream),
       ".mpq": checksigs.check_mpq(str_stream),
       ".oct": checksigs.check_oct(str_stream),
       ".pak": checksigs.check_pak(str_stream),

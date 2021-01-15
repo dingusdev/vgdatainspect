@@ -64,7 +64,9 @@ def check_magic_assist(file_input):
         "start-0:8=50503131": "Suspected file using PowerPacker 1.1 compression",
         "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
         "start-0:8=52535430": "Retro Studios game archive file",
+        "start-0:8=535A4444": "Microsoft Quantum compressed data",
         "start-0:8=59617A30": "Nintendo game archive file",
+        "start-0:8=62767832": "LZFSE compressed data",
         "start-0:12=377ABCAF271C": "Suspected 7zip file",
         "start-0:12=526172211A07": "Suspected RAR file",
         "start-0:10=7573746172": "Suspected TAR file",
@@ -145,7 +147,7 @@ def check_bmp(file_input):
         return "Unknown BMP file"
 
 def check_crp(file_input):
-    if (file_input[0:8] == "CRAP"):
+    if (file_input[0:8] == "43524150"):
         return "Colossal Raw Asset Package suspected"
     else:
         return "Unknown CRP file"
@@ -250,6 +252,12 @@ def check_mod(file_input):
 
     return codsig.get(file_input, "Unrecognized MOD tracker file or not a tracker file") 
     
+def check_mp3(file_input):
+    if ((file_input[0:6] == "494433")):
+        return "MP3 file with ID3v2 header suspected"
+    else:
+        return "Unknown MP3 file"
+        
 def check_mpq(file_input):
     if ((file_input[0:8] == "4D50511A")):
         return "Blizzard MoPaQ file suspected"
