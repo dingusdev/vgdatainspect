@@ -1,5 +1,5 @@
 # VGDataInspect
-# Written by Divingkatae on 12/16/2020-1/6/2021
+# Written by Divingkatae on 12/16/2020-1/15/2021
 
 import os
 import sys
@@ -16,6 +16,7 @@ def double_checker(str_extension, str_stream, str_file):
     double_checklist = {
       ".app": checksigs.check_app(str_stream),
       ".bmp": checksigs.check_bmp(str_stream),
+      ".crp": checksigs.check_crp(str_stream),
       ".dlw": checksigs.check_dlw(str_stream),
       ".elf": checksigs.check_elf(str_stream),
       ".exe": checksigs.check_exe(str_stream),
@@ -58,7 +59,7 @@ if __name__ == "__main__":
         
     try:
         print (grab_extension_match(grabbed_ext))
-    except JSONDecodeError:
+    except json.decoder.JSONDecodeError:
         print("An error occured in processing the list of extensions!")
     except:
         print("An unexpected error occured - please report this issue!")

@@ -33,6 +33,8 @@ def check_exe_assist(file_input):
         "start-56:64=4C5A3931": "Executable using LZ-91 compression",
         "start-56:64=524A5358": "Executable using ARJ compression",
         "start-60:72=504B4C495445": "Executable using PKLite compression",
+        "start-72:82-4C48412773": "Executable using LHA 2.x compression",
+        "start-74:88=4C486172632773": "Executable using LHarc 1.x compression",
         "start-170:176=555058": "Executable using UPX compression"
     }
     
@@ -48,17 +50,27 @@ def check_magic_assist(file_input):
 
     codsig = {
         "start-0:6=524E53": "Suspected file using RNC compression",
+        "start-0:8=02214C18": "LZ4 (legacy) compressed file",
+        "start-0:8=04224D18": "LZ4 compressed file",
+        "start-0:8=1A45DFA3": "Matroska media file",
+        "start-0:8=25B52FFD": "Zstandard compressed file",
+        "start-0:8=28B52FFD": "Zstandard compressed file",
+        "start-0:8=4C5A4950": "Suspected LZIP file",
+        "start-0:8=4C525A49": "LRZip compressed file",
+        "start-0:8=4D494F30": "compressed file for Nintendo 64",
         "start-0:8=504B0304": "Suspected ZIP file",
         "start-0:8=504B0506": "Suspected ZIP file",
         "start-0:8=504B0708": "Suspected ZIP file",
-        "start-0:8=4C5A4950": "Suspected LZIP file",
         "start-0:8=50503131": "Suspected file using PowerPacker 1.1 compression",
         "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
-        "start-0:10=7573746172": "Suspected TAR file",
-        "start-0:12=526172211A07": "Suspected RAR file",
+        "start-0:8=52535430": "Retro Studios game archive file",
+        "start-0:8=59617A30": "Nintendo game archive file",
         "start-0:12=377ABCAF271C": "Suspected 7zip file",
+        "start-0:12=526172211A07": "Suspected RAR file",
+        "start-0:10=7573746172": "Suspected TAR file",
         "start-0:12=FD377A585A00": "Suspected XZ file",
-        "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file"
+        "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file",
+        "start-0:18=894C5A4F000D0A1A0A": "LZO compressed file",
     }
    
     for key in codsig:
@@ -132,6 +144,12 @@ def check_bmp(file_input):
     else:
         return "Unknown BMP file"
 
+def check_crp(file_input):
+    if (file_input[0:8] == "CRAP"):
+        return "Colossal Raw Asset Package suspected"
+    else:
+        return "Unknown CRP file"
+        
 def check_dlw(file_input):
     if (file_input[0:16] == "53555052454D4521"):
         return "Dr. Lunatic Supreme with Cheese world file"
