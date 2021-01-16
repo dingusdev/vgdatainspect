@@ -48,6 +48,7 @@ def double_checker(str_extension, str_stream, str_file):
         return checksigs.check_magic_number(str_stream)
 
 if __name__ == "__main__":
+    file_entered = True
     txt = input("Enter the file you would like to inspect: ")
     argument=os.path.splitext(txt)
     grabbed_ext = argument[1]
@@ -59,38 +60,44 @@ if __name__ == "__main__":
         print (grabbed_ext)
         
     try:
-        print (grab_extension_match(grabbed_ext))
+        if (len(txt) >= 3):
+            print (grab_extension_match(grabbed_ext))
+        else:
+            print ("No file entered!")
+            file_entered = False
     except json.decoder.JSONDecodeError:
         print("An error occured in processing the list of extensions!")
     except:
         print("An unexpected error occured - please report this issue!")
 
-    if os.path.exists(txt):
-        grabfile = open(txt, 'rb')
-        filesize = os.stat(txt).st_size
-        print("File Size (in bytes):", filesize)
-        if (filesize >= 256):
-            print("First 256 bytes:")
-            step1 = grabfile.read()[0:256].hex().upper()
+    if file_entered:
+        if os.path.exists(txt):
+            grabfile = open(txt, 'rb')
+            filesize = os.stat(txt).st_size
+            print("File Size (in bytes):", filesize)
+            if (filesize >= 256):
+                print("First 256 bytes:")
+                step1 = grabfile.read()[0:256].hex().upper()
 
-            for sub_offset in range(0, 512, 32):
-                print(step1[sub_offset:(sub_offset +32)])
-        else:
-            print("Entire File Contents:")
-            step1 = grabfile.read().hex().upper()
-                
-            print(step1.upper())
-
-        if (grabbed_ext == ".mod"):
-            if (filesize >= 1084):
-                step1 = grabfile.read()[1080:1084].hex().upper()
+                for sub_offset in range(0, 512, 32):
+                    print(step1[sub_offset:(sub_offset +32)])
             else:
-                print("Warning - Invalid MOD file suspected")
+                print("Entire File Contents:")
+                step1 = grabfile.read().hex().upper()
                 
-        print("Checking for a magic number...")
-        print(double_checker(grabbed_ext, step1, txt))
+                print(step1.upper())
 
-    else:
-        print("It seems the file does not exist. Make sure it is in the proper file path specified.")
+            if (grabbed_ext == ".mod"):
+                if (filesize >= 1084):
+                    step1 = grabfile.read()[1080:1084].hex().upper()
+                else:
+                    print("Warning - Invalid MOD file suspected")
+                
+            print("Checking for a magic number...")
+            print(double_checker(grabbed_ext, step1, txt))
+
+        else:
+            print("It seems the file does not exist.")
+            print("Make sure it is in the proper file path specified.")
 
     input("Press Enter to quit...")
