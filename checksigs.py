@@ -57,6 +57,7 @@ def check_magic_assist(file_input):
         "start-0:8=28B52FFD": "Zstandard compressed file",
         "start-0:8=4C525A49": "LRZip compressed file",
         "start-0:8=4C5A4950": "Suspected LZIP file",
+        "start-0:8=4D48325A": "Manhunt 2 zlib compressed archive (Wii)",
         "start-0:8=4D494F30": "compressed file for Nintendo 64",
         "start-0:8=504B0304": "Suspected ZIP file",
         "start-0:8=504B0506": "Suspected ZIP file",
@@ -66,6 +67,7 @@ def check_magic_assist(file_input):
         "start-0:8=52535430": "Retro Studios game archive file",
         "start-0:8=535A4444": "Microsoft Quantum compressed data",
         "start-0:8=59617A30": "Nintendo game archive file",
+        "start-0:8=5A32484D": "Manhunt 2 zlib compressed archive (PS2, PSP, PC)",
         "start-0:8=62767832": "LZFSE compressed data",
         "start-0:10=3C3F786D6C": "XML file",
         "start-0:10=7573746172": "Suspected TAR file",
@@ -73,6 +75,10 @@ def check_magic_assist(file_input):
         "start-0:12=526172211A07": "Suspected RAR file",
         "start-0:12=FD377A585A00": "Suspected XZ file",
         "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file",
+        "start-0:16=4173757261202020": "Asura engine uncompressed file",
+        "start-0:16=4173757261436D70": "Asura engine compressed file",
+        "start-0:16=41737572615A6262": "Asura engine zlib compressed file",
+        "start-0:16=41737572615A6C62": "Asura engine zlib compressed file",
         "start-0:18=894C5A4F000D0A1A0A": "LZO compressed file",
     }
    
