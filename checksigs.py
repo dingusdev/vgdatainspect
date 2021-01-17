@@ -55,8 +55,8 @@ def check_magic_assist(file_input):
         "start-0:8=1A45DFA3": "Matroska media file",
         "start-0:8=25B52FFD": "Zstandard compressed file",
         "start-0:8=28B52FFD": "Zstandard compressed file",
-        "start-0:8=4C5A4950": "Suspected LZIP file",
         "start-0:8=4C525A49": "LRZip compressed file",
+        "start-0:8=4C5A4950": "Suspected LZIP file",
         "start-0:8=4D494F30": "compressed file for Nintendo 64",
         "start-0:8=504B0304": "Suspected ZIP file",
         "start-0:8=504B0506": "Suspected ZIP file",
@@ -67,9 +67,10 @@ def check_magic_assist(file_input):
         "start-0:8=535A4444": "Microsoft Quantum compressed data",
         "start-0:8=59617A30": "Nintendo game archive file",
         "start-0:8=62767832": "LZFSE compressed data",
+        "start-0:10=3C3F786D6C": "XML file",
+        "start-0:10=7573746172": "Suspected TAR file",
         "start-0:12=377ABCAF271C": "Suspected 7zip file",
         "start-0:12=526172211A07": "Suspected RAR file",
-        "start-0:10=7573746172": "Suspected TAR file",
         "start-0:12=FD377A585A00": "Suspected XZ file",
         "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file",
         "start-0:18=894C5A4F000D0A1A0A": "LZO compressed file",
@@ -199,12 +200,26 @@ def check_gam(file_input):
     else:
         return "Unknown GAM file"
 
+def check_gbx(file_input):
+    if ((file_input[0:16] == "4E6164656F50616B")):
+        return "Nadeo Trackmania packaged file suspected"
+    elif ((file_input[0:6] == "474258")):
+        return "Unspecified Trackmania file suspected"
+    else:
+        return "Unknown GBX file"
+
 def check_gif(file_input):
     if ((file_input[0:12] == "474946383761") or \
         (file_input[0:12] == "474946383961")):
         return "The Games Factory game file suspected"
     else:
         return "Unknown GAM file"
+       
+def check_hqx(file_input):
+    if ((file_input[68:80] == "42696E486578")):
+        return "BinHex encoded file"
+    else:
+        return "Unknown HQX file"
         
 def check_ibm(file_input):
     if ((file_input[0:8] == "06000000") and \
@@ -302,12 +317,33 @@ def check_png(file_input, file_name):
     else:
         return "Unknown PNG file"
         
+def check_rez(file_input):
+    if ((file_input[0:16] == "0D0A52657A4D6772")):
+        return "Monolith REZ file (i.e. Shogo) suspected"
+    else:
+        return "Unknown SAV file"
+        
+        
 def check_sav(file_input):
     if ((file_input[0:8] == "46444C41")):
         return "Transcendence game save file suspected"
     else:
         return "Unknown SAV file"
-
+        
+def check_swf(file_input):
+    if ((file_input[0:6] == "465753")):
+        return "Uncompressed Adobe Flash file suspected"
+    elif ((file_input[0:6] == "435753")):
+        return "Compressed Adobe Flash file suspected"
+    else:
+        return "Unknown STX suspected"
+   
+def check_stx(file_input):
+    if ((file_input[0:8] == "52535900")):
+        return "Atari ST disk image suspected"
+    else:
+        return "Unknown STX suspected"
+        
 def check_szt(file_input):
     if ((file_input[0:4] == "FEFF")):
         return "Super ZZT level/world file"
