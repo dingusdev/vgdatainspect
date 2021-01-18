@@ -66,6 +66,7 @@ def check_magic_assist(file_input):
         "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
         "start-0:8=52535430": "Retro Studios game archive file",
         "start-0:8=535A4444": "Microsoft Quantum compressed data",
+        "start-0:8=54494D32": "PlayStation 2 TM2 texture",
         "start-0:8=59617A30": "Nintendo game archive file",
         "start-0:8=5A32484D": "Manhunt 2 zlib compressed archive (PS2, PSP, PC)",
         "start-0:8=62767832": "LZFSE compressed data",
@@ -254,7 +255,7 @@ def check_midi(file_input):
     if ((file_input[0:8] == "4D546864")):
         return "Musical Instrument Digital Interface music file suspected"
     else:
-        return "Unknown GAM file"
+        return "Unknown MID file"
         
 def check_mod(file_input):
     codsig = {
@@ -297,6 +298,18 @@ def check_pak(file_input):
     else:
         return "Unknown PAK file"
         
+def check_pcx(file_input):
+    if (file_input[0:2] == "0A"):
+        print("PCX file suspected")
+        if (file_input[4:6] == "01"):
+            return "RLE-Encoded image"
+        elif (file_input[4:6] == "00"):
+            return "Possible uncompressed image"
+        else:
+            return "Possibly bad PCX image"
+    else:
+        return "Unknown PCX file"
+        
 def check_png(file_input, file_name):
     if ((file_input[0:16] == "89504E470D0A1A0A")):
         print("Portable Network Graphics file suspected.")
@@ -327,7 +340,7 @@ def check_rez(file_input):
     if ((file_input[0:16] == "0D0A52657A4D6772")):
         return "Monolith REZ file (i.e. Shogo) suspected"
     else:
-        return "Unknown SAV file"
+        return "Unknown REZ file"
         
         
 def check_sav(file_input):
@@ -336,13 +349,19 @@ def check_sav(file_input):
     else:
         return "Unknown SAV file"
         
+def check_shw(file_input):
+    if ((file_input[0:16] == "53484F4C4C4F5721")):
+        return "Sleepless Hollow world file"
+    else:
+        return "Unknown SHW file"
+        
 def check_swf(file_input):
     if ((file_input[0:6] == "465753")):
         return "Uncompressed Adobe Flash file suspected"
     elif ((file_input[0:6] == "435753")):
         return "Compressed Adobe Flash file suspected"
     else:
-        return "Unknown STX suspected"
+        return "Unknown SWF suspected"
    
 def check_stx(file_input):
     if ((file_input[0:8] == "52535900")):
@@ -355,6 +374,24 @@ def check_szt(file_input):
         return "Super ZZT level/world file"
     else:
         return "Corrupted Super ZZT file suspected"
+        
+def check_tdb(file_input):
+    if ((file_input[0:8] == "46444C41")):
+        return "Transcendence database file"
+    else:
+        return "Unknown TDB suspected"
+
+def check_tim(file_input):
+    if ((file_input[0:8] == "10000000")):
+        return "PlayStation TIM file"
+    else:
+        return "Unknown TIM suspected"
+        
+def check_tre(file_input):
+    if ((file_input[0:16] == "5854524500000000")):
+        return "Wing Commander 3/4 XTRE file"
+    else:
+        return "Unknown TRE file"
         
 def check_wad(file_input):
     if ((file_input[0:8] == "49574144") or \
