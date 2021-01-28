@@ -27,14 +27,17 @@ def double_checker(str_extension, str_stream, str_file):
       ".gif": checksigs.check_gif(str_stream),
       ".hqx": checksigs.check_hqx(str_stream),
       ".ibm": checksigs.check_ibm(str_stream),
+      ".iff": checksigs.check_iff(str_stream),
       ".jpg": checksigs.check_jpeg(str_stream),
       ".jpeg": checksigs.check_jpeg(str_stream),
+      ".md2": checksigs.check_md2(str_stream),
       ".mid": checksigs.check_midi(str_stream),
       ".midi": checksigs.check_midi(str_stream),
       ".mfa": checksigs.check_mfa(str_stream),
       ".mod": checksigs.check_mod(str_stream),
       ".mp3": checksigs.check_mp3(str_stream),
       ".mpq": checksigs.check_mpq(str_stream),
+      ".nes": checksigs.check_nes(str_stream),
       ".oct": checksigs.check_oct(str_stream),
       ".pak": checksigs.check_pak(str_stream),
       ".pcx": checksigs.check_pcx(str_stream),
@@ -43,6 +46,7 @@ def double_checker(str_extension, str_stream, str_file):
       ".sav": checksigs.check_sav(str_stream),
       ".shw": checksigs.check_shw(str_stream),
       ".stx": checksigs.check_stx(str_stream),
+      ".svg": checksigs.check_svg(str_stream, str_file),
       ".swf": checksigs.check_swf(str_stream),
       ".szt": checksigs.check_szt(str_stream),
       ".tim": checksigs.check_tim(str_stream),
@@ -104,6 +108,7 @@ if __name__ == "__main__":
                     print("Warning - Invalid MOD file suspected")
                 
             print("Checking for a magic number...")
+            
             print(double_checker(grabbed_ext, step1, txt))
 
         else:

@@ -49,12 +49,15 @@ def check_magic_assist(file_input):
     file_type_string = "Magic number not known"
 
     codsig = {
+        "start-0:6=4C5A47": "liblzg compressed file",
         "start-0:6=524E53": "Suspected file using RNC compression",
+        "start-0:6=5D0000": "Suspected LZMA file",
         "start-0:8=02214C18": "LZ4 (legacy) compressed file",
         "start-0:8=04224D18": "LZ4 compressed file",
         "start-0:8=1A45DFA3": "Matroska media file",
         "start-0:8=25B52FFD": "Zstandard compressed file",
         "start-0:8=28B52FFD": "Zstandard compressed file",
+        "start-0:8=4643385F": "FC8 compressed file",
         "start-0:8=4C525A49": "LRZip compressed file",
         "start-0:8=4C5A4950": "Suspected LZIP file",
         "start-0:8=4D48325A": "Manhunt 2 zlib compressed archive (Wii)",
@@ -62,6 +65,7 @@ def check_magic_assist(file_input):
         "start-0:8=504B0304": "Suspected ZIP file",
         "start-0:8=504B0506": "Suspected ZIP file",
         "start-0:8=504B0708": "Suspected ZIP file",
+        "start-0:8=504C4830": "Metal Slader Glory DX compressed data",
         "start-0:8=50503131": "Suspected file using PowerPacker 1.1 compression",
         "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
         "start-0:8=52535430": "Retro Studios game archive file",
@@ -70,16 +74,20 @@ def check_magic_assist(file_input):
         "start-0:8=59617A30": "Nintendo game archive file",
         "start-0:8=5A32484D": "Manhunt 2 zlib compressed archive (PS2, PSP, PC)",
         "start-0:8=62767832": "LZFSE compressed data",
+        "start-0:8=9E2A83C1": "Unreal Engine package",
         "start-0:10=3C3F786D6C": "XML file",
         "start-0:10=7573746172": "Suspected TAR file",
         "start-0:12=377ABCAF271C": "Suspected 7zip file",
         "start-0:12=526172211A07": "Suspected RAR file",
+        "start-0:12=534D53523030": "SMSR00 compressed file",
         "start-0:12=FD377A585A00": "Suspected XZ file",
-        "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file",
         "start-0:16=4173757261202020": "Asura engine uncompressed file",
         "start-0:16=4173757261436D70": "Asura engine compressed file",
         "start-0:16=41737572615A6262": "Asura engine zlib compressed file",
         "start-0:16=41737572615A6C62": "Asura engine zlib compressed file",
+        "start-0:16=504552532D535A50": "Nintendo unspecified compression",
+        "start-0:16=50532D5820455845": "PlayStation executable file",
+        "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file",
         "start-0:18=894C5A4F000D0A1A0A": "LZO compressed file",
     }
    
@@ -237,6 +245,14 @@ def check_ibm(file_input):
     else:
         return "Unknown IBM file"
         
+def check_iff(file_input):
+    if ((file_input[0:24] == "4946462046494C4520322E35")):
+        return "The Sims (PC) IFF file suspected"
+    elif (file_input[0:8] == "52494646"):
+        return riff_check(file_input)
+    else:
+        return "Unknown IFF file"
+        
 def check_jpeg(file_input):
     if ((file_input[0:8] == "FFD8FFDB") or (file_input[0:8] == "FFD8FFEE") or \
         ((file_input[0:8] == "FFD8FFE0") and (file_input[12:20] == "4A464946")) or \
@@ -244,6 +260,12 @@ def check_jpeg(file_input):
         return "JPEG file confirmed"
     else:
         return "Possibly corrupted JPEG file"
+        
+def check_md2(file_input):
+    if ((file_input[0:8] == "49445032")):
+        return "Quake 2 model file suspected"
+    else:
+        return "Unknown MD2 file"
         
 def check_mfa(file_input):
     if ((file_input[0:8] == "4D4D4632")):
@@ -285,6 +307,12 @@ def check_mpq(file_input):
         return "Blizzard MoPaQ file suspected"
     else:
         return "Unknown MPQ file"
+
+def check_nes(file_input):
+    if ((file_input[0:8] == "4E45531A")):
+        return "NES ROM file with iNES header suspected"
+    else:
+        return "Unknown NES file"
         
 def check_oct(file_input):
     if ((file_input[0:16] == "29760145CDCC8C3F")):
@@ -368,6 +396,20 @@ def check_stx(file_input):
         return "Atari ST disk image suspected"
     else:
         return "Unknown STX suspected"
+        
+def check_svg(file_input, file_name):
+    if ((file_input[0:10] == "3C3F786D6C")):
+        print("Checking SVG file integrity")
+        
+        svgsigcheck = open(file_name, 'rb').read().hex().upper()
+        
+        if "3C737667" in svgsigcheck and "3C2F7376673E" in svgsigcheck:
+            return "Scalable Vector Graphics file suspected"
+        else:
+            return "Corrupted SVG file"
+        
+    else:
+        return "Unknown SVG file"
         
 def check_szt(file_input):
     if ((file_input[0:4] == "FEFF")):
