@@ -69,12 +69,14 @@ def check_magic_assist(file_input):
         "start-0:8=50503131": "Suspected file using PowerPacker 1.1 compression",
         "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
         "start-0:8=52535430": "Retro Studios game archive file",
+        "start-0:8=50524159": "Creatures Evolution Engine data file",
         "start-0:8=535A4444": "Microsoft Quantum compressed data",
         "start-0:8=54494D32": "PlayStation 2 TM2 texture",
         "start-0:8=59617A30": "Nintendo game archive file",
         "start-0:8=5A32484D": "Manhunt 2 zlib compressed archive (PS2, PSP, PC)",
         "start-0:8=62767832": "LZFSE compressed data",
         "start-0:8=9E2A83C1": "Unreal Engine package",
+        "start-0:8=C1832A9E": "Unreal Engine package",
         "start-0:10=3C3F786D6C": "XML file",
         "start-0:10=7573746172": "Suspected TAR file",
         "start-0:12=377ABCAF271C": "Suspected 7zip file",
@@ -161,7 +163,15 @@ def check_bmp(file_input):
                 return "Valid DIB header, but no valid color profile"
     else:
         return "Unknown BMP file"
-
+        
+def check_cob(file_input):
+    if (file_input[0:16] == "43616C6967617269"):
+        return "TruSpace 3D object file"
+    elif (file_input[0:8] == "636F6232"):
+        return "Creatures 2 Creature Object file"
+    else:
+        return "Unknown COB file"
+        
 def check_crp(file_input):
     if (file_input[0:8] == "43524150"):
         return "Colossal Raw Asset Package suspected"
@@ -321,10 +331,12 @@ def check_oct(file_input):
         return "Unknown OCT file"
         
 def check_pak(file_input):
-    if (file_input[0:8] == "5041434B"):
+    if (file_input[0:8] == ""):
         return "Quake PAK file suspected" 
     else:
-        return "Unknown PAK file"
+        #PAK is a very generic extension, so it's possible 
+        #we could have overlooked the more common file signatures
+        return check_magic_assist(file_input)
         
 def check_pcx(file_input):
     if (file_input[0:2] == "0A"):
@@ -370,12 +382,23 @@ def check_rez(file_input):
     else:
         return "Unknown REZ file"
         
-        
 def check_sav(file_input):
     if ((file_input[0:8] == "46444C41")):
         return "Transcendence game save file suspected"
     else:
         return "Unknown SAV file"
+        
+def check_sfc(file_input, file_name):
+    filesize = os.stat(file_name).st_size
+    
+    if (filesize >= 65535):
+        sfccheck = open(file_name, 'rb').read()[32704:32720]
+        if (sfccheck.decode("ascii").isprintable()):
+            return "Super NES/Famicom game suspected"
+        else:
+            return "Unknown SFC file"
+    else:
+        return "Unknown SFC file"
         
 def check_shw(file_input):
     if ((file_input[0:16] == "53484F4C4C4F5721")):

@@ -16,6 +16,7 @@ def double_checker(str_extension, str_stream, str_file):
     double_checklist = {
       ".app": checksigs.check_app(str_stream),
       ".bmp": checksigs.check_bmp(str_stream),
+      ".cob": checksigs.check_crp(str_stream),
       ".crp": checksigs.check_crp(str_stream),
       ".dib": checksigs.check_bmp(str_stream),
       ".dlw": checksigs.check_dlw(str_stream),
@@ -44,6 +45,7 @@ def double_checker(str_extension, str_stream, str_file):
       ".png": checksigs.check_png(str_stream, str_file),
       ".rez": checksigs.check_rez(str_stream),
       ".sav": checksigs.check_sav(str_stream),
+      ".sfc": checksigs.check_sfc(str_stream, str_file),
       ".shw": checksigs.check_shw(str_stream),
       ".stx": checksigs.check_stx(str_stream),
       ".svg": checksigs.check_svg(str_stream, str_file),
@@ -56,8 +58,8 @@ def double_checker(str_extension, str_stream, str_file):
       ".zzt": checksigs.check_zzt(str_stream),
     }
 
-    if str_extension in double_checklist:
-        return double_checklist[str_extension]
+    if str_extension in double_checklist.keys():
+         return double_checklist[str_extension]
     else:
         return checksigs.check_magic_number(str_stream)
 
