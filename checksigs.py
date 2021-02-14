@@ -254,6 +254,12 @@ def check_ibm(file_input):
         return "Living Books (PC) file suspected"
     else:
         return "Unknown IBM file"
+    
+def check_img(file_input):
+    if ((file_input[0:8] == "494D5354")):
+        return "LongBow Digital Arts ImageSet file suspected"
+    else:
+        return "Unknown IMG file"
         
 def check_iff(file_input):
     if ((file_input[0:24] == "4946462046494C4520322E35")):
@@ -392,8 +398,10 @@ def check_sfc(file_input, file_name):
     filesize = os.stat(file_name).st_size
     
     if (filesize >= 65535):
-        sfccheck = open(file_name, 'rb').read()[32704:32720]
-        if (sfccheck.decode("ascii").isprintable()):
+        sfccheck = open(file_name, 'rb').read()[0x7FC0:0x7FD0]
+        sfccheck2 = open(file_name, 'rb').read()[0xFFC0:0xFFD0]
+        if (sfccheck.decode("ascii").isprintable() or \
+            sfccheck2.decode("ascii").isprintable()):
             return "Super NES/Famicom game suspected"
         else:
             return "Unknown SFC file"
