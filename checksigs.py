@@ -70,6 +70,7 @@ def check_magic_assist(file_input):
         "start-0:8=50503230": "Suspected file using PowerPacker 2.0 compression",
         "start-0:8=52535430": "Retro Studios game archive file",
         "start-0:8=50524159": "Creatures Evolution Engine data file",
+        "start-0:8=5041434B": "Quake PAK file",
         "start-0:8=535A4444": "Microsoft Quantum compressed data",
         "start-0:8=54494D32": "PlayStation 2 TM2 texture",
         "start-0:8=59617A30": "Nintendo game archive file",
@@ -89,8 +90,10 @@ def check_magic_assist(file_input):
         "start-0:16=41737572615A6C62": "Asura engine zlib compressed file",
         "start-0:16=504552532D535A50": "Nintendo unspecified compression",
         "start-0:16=50532D5820455845": "PlayStation executable file",
+        "start-0:16=5858544501000100": "Gameloft compressed XML file",
         "start-0:16=D0CF11E0A1B11AE1": "Suspected OLE file",
         "start-0:18=894C5A4F000D0A1A0A": "LZO compressed file",
+        "start-14:24=2D7371782D": "Squeez compressed file",
     }
    
     for key in codsig:
@@ -117,7 +120,9 @@ def form_check(file_input):
         "4C574F42" : "Lightwave 3D object",
         "53434448" : "SimCity 2000 saved city",
         "534D5553" : "Simplified Musical Score file",
-        "54444444" : "3D Data Description"
+        "54444444" : "3D Data Description",
+        "55564D50" : "UV texture mapping data",
+        "564F584C" : "Voxel-based map data"
     }
 
     return codsig.get(grab_sig, "Unrecognized IFF-style file") 
@@ -335,14 +340,6 @@ def check_oct(file_input):
         return "Avalanche Software texture file suspected"
     else:
         return "Unknown OCT file"
-        
-def check_pak(file_input):
-    if (file_input[0:8] == ""):
-        return "Quake PAK file suspected" 
-    else:
-        #PAK is a very generic extension, so it's possible 
-        #we could have overlooked the more common file signatures
-        return check_magic_assist(file_input)
         
 def check_pcx(file_input):
     if (file_input[0:2] == "0A"):
