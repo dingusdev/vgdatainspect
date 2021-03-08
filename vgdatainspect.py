@@ -111,7 +111,10 @@ if __name__ == "__main__":
                 
             print("Checking for a magic number...")
             
-            print(double_checker(grabbed_ext, step1, txt))
+            if (grabbed_ext == ""):
+                print(checksigs.check_magic_number(step1))
+            else:
+                print(double_checker(grabbed_ext, step1, txt))
 
         else:
             print("It seems the file does not exist.")
