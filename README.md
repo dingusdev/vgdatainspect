@@ -1,3 +1,9 @@
-# vgdatainspect JS
+# VGDataInspect JS
 
-Right now, this tool only supports identifying file extensions.
+This is a tool to identify video game related files.
+
+## About
+
+This app can be accessed in your browser with the link below:
+
+https://romh-acking.github.io/vgdatainspect/

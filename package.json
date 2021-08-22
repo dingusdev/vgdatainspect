@@ -1,6 +1,6 @@
 {
-  "name": "lunar expand JS",
-  "homepage": "http://romh-acking.github.io/lunar-expand-JS",
+  "name": "VG Data Inspect JS",
+  "homepage": "http://romh-acking.github.io/vgdatainspect",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -45,6 +45,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.1.0"
+    "gh-pages": "^3.2.3"
   }
 }

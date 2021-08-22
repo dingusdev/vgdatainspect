@@ -48,7 +48,7 @@ export default function Users() {
 
   useEffect(() => {
     try {
-      getJSON("https://raw.githubusercontent.com/romh-acking/vgdatainspect/main/rcogfileexts.json", function (status, resp) {
+      getJSON("https://github.com/dingusdev/vgdatainspect/blob/main/rcogfileexts.json", function (status, resp) {
         if (resp) {
           setFileExtensionSettings(resp);
         } else {
