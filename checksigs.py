@@ -239,11 +239,12 @@ def check_gbx(file_input):
         return "Unknown GBX file"
 
 def check_gif(file_input):
-    if ((file_input[0:12] == "474946383761") or \
-        (file_input[0:12] == "474946383961")):
-        return "The Games Factory game file suspected"
+    if (file_input[0:12] == "474946383761"):
+        return "GIF87a file"
+    elif (file_input[0:12] == "474946383961"):
+        return "GIF89a file"
     else:
-        return "Unknown GAM file"
+        return "Unknown GIF file"
        
 def check_hqx(file_input):
     if ((file_input[68:80] == "42696E486578")):
