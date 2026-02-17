@@ -674,6 +674,7 @@
  ".gma": "GameCube model archive",
  ".gmax": "Gmax mesh file",
  ".gmd": "Game Maker pre-version 6 (Mark Overmars) project file",
+ ".gmez": "Game Maker Studio compressed extension package",
  ".gmf": "Leadwerks Game Model file",
  ".gmk": "Game Maker 7 (YoYo Games) data file",
  ".gml": "Game Maker (YoYo Games) language file",
@@ -688,6 +689,7 @@
  ".goo": "Alien Rampage archive file",
  ".gor": "Myth: The Fallen Lords data file",
  ".goz": "GoZBrush model transfer file",
+ ".gpak": "Game Pack Archive Library file",
  ".gpe": "GP2X video game",
  ".gpk": "Iron Sky: Invasion data package",
  ".gpl": "GIMP Palette",
@@ -1672,6 +1674,7 @@
  ".stb": "Pikmin 2 cutscene data",
  ".stencyl": "Stencyl project file",
  ".stex": "Godot Engine stream texture file",
+ ".stfs": "XBox 360 content package",
  ".sti": "Sir-Tech image file",
  ".stl": "Stereolithography 3D printing file or SuperTux level file",
  ".stm": "StreamTracker 2 module file",
@@ -2099,6 +2102,7 @@
  ".ytl": "Cloning Clyde level tileset file",
  ".yuv": "Composite image file",
  ".yyp": "GameMaker Studio 2 project file",
+ ".yymp": "GameMaker Studio compressed resource package",
  ".z": "Unix archive file or Marathon 2 data file",
  ".z01": "Part 1 of a zip file",
  ".z02": "Part 2 of a zip file",
@@ -2136,3 +2140,4 @@
  ".zwp": "Dark Reign 2 file archive",
  ".zzt": "ZZT game file",
  ".zzz": "Black & White game data file"}
+
